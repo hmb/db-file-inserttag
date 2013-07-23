@@ -19,9 +19,9 @@ class DbFileInserttag
   {
     if ($strRegexp == 'tagname')
     {
-      if (!preg_match('/^[a-z][a-z_]*[a-z]$/', $varValue))
+      if (!preg_match('/^[a-z]+(_[a-z]+)*$/', $varValue))
       {
-        $objWidget->addError($GLOBALS['TL_LANG']['MSC']['tagnameError']);
+        $objWidget->addError($GLOBALS['TL_LANG']['MSC']['dbFileTagnameError']);
       }
 
       return true;
@@ -33,35 +33,33 @@ class DbFileInserttag
 
   public function replaceDbFileInserttag($strInsertTag)
   {
-    $keyname = !empty($GLOBALS['TL_CONFIG']['dbFileInserttagName'])
-      ? $GLOBALS['TL_CONFIG']['dbFileInserttagName']
-      : 'x_db_file';
+    // remove possible flags, this extension does not implement new flags
+    // existing flags are handled by the core, so they are jsut ignored here
+    $flags = explode('|', $strInsertTag);
+    $arKeyVal = explode('::', $flags[0]);
 
-    $showerror = !empty($GLOBALS['TL_CONFIG']['dbFileInserttagShowError'])
-      && $GLOBALS['TL_CONFIG']['dbFileInserttagShowError'];
-
-    $arKeyVal = explode('::', $strInsertTag);
-
-    if ($arKeyVal[0] !== $keyname)
+    if ($arKeyVal[0] !== $GLOBALS['TL_CONFIG']['dbFileInserttagName'])
     {
       return false;
     }
 
+    $showerror = $GLOBALS['TL_CONFIG']['dbFileInserttagShowError'];
+
     if (!isset($arKeyVal[1]) || !is_numeric($arKeyVal[1]))
     {
-      return $showerror? "### ID {$arKeyVal[1]} ungültig ###" : false;
+      return $showerror? "### ".$GLOBALS['TL_LANG']['MSC']['dbFileInvalidId'].$arKeyVal[1]." ###" : false;
     }
 
     $objFile = \FilesModel::findByPk($arKeyVal[1]);
 
     if (!$objFile->found)
     {
-      return $showerror? "### ID {$arKeyVal[1]} nicht gefunden ###" : false;
+      return $showerror? "### ".$GLOBALS['TL_LANG']['MSC']['dbFileUnknownId'].$arKeyVal[1]." ###" : false;
     }
 
     if (!file_exists($objFile->path))
     {
-      return $showerror? "### Datei {$objFile->path} nicht gefunden ###" : false;
+      return $showerror? "### ".$GLOBALS['TL_LANG']['MSC']['dbFileNotFound'].$objFile->path." ###" : false;
     }
 
     return $objFile->path;
