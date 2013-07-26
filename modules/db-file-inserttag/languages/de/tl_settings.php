@@ -20,6 +20,11 @@ $GLOBALS['TL_LANG']['tl_settings']['dbFileInserttagName'] = array(
   'Der db-file Inserttag wird mit dem hier angegebenem Namen verwendet. Z.B. resultiert "x-db-file" in {{x-db-file::id}}'
 );
 
+$GLOBALS['TL_LANG']['tl_settings']['dbFileFlagPathurlencode'] = array(
+  'Name des "pathurlencode" Inserttag-Flags',
+  'Der db-file Inserttag kann über das angegebene Flag urlencoded werden. Z.B. {{x-db-file::id|x_pathurlencode}}'
+);
+
 $GLOBALS['TL_LANG']['tl_settings']['dbFileInserttagShowError'] = array(
   'Zeige "db-file" Inserttag Fehler',
   'Fehler im db-file Inserttag, wie z.B. eine falsche ID werden im Klartext angezeigt.'

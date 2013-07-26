@@ -16,7 +16,7 @@
 $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace
 (
   ',bypassCache',
-  ',bypassCache,dbFileInserttagName,dbFileInserttagShowError',
+  ',bypassCache,dbFileInserttagName,dbFileFlagPathurlencode,dbFileInserttagShowError',
   $GLOBALS['TL_DCA']['tl_settings']['palettes']['default']
 );
 
@@ -25,6 +25,13 @@ $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace
 $GLOBALS['TL_DCA']['tl_settings']['fields']['dbFileInserttagName'] = array
 (
   'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['dbFileInserttagName'],
+  'inputType'               => 'text',
+  'eval'                    => array('mandatory'=>true, 'nospace'=>true, 'rgxp' => 'tagname', 'tl_class'=>'w50')
+);
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['dbFileFlagPathurlencode'] = array
+(
+  'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['dbFileFlagPathurlencode'],
   'inputType'               => 'text',
   'eval'                    => array('mandatory'=>true, 'nospace'=>true, 'rgxp' => 'tagname', 'tl_class'=>'w50')
 );
